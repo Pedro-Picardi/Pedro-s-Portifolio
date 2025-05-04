@@ -84,7 +84,13 @@ export default function Home() {
   return (
     <main 
       className="flex flex-col items-center justify-center h-screen bg-deep-background"
-      style={lightingStyles}
+      style={{
+        ...lightingStyles,
+        backgroundImage: 'url(/assets/bghero.webp)',
+        backgroundSize: 'contain',
+        backgroundPosition: 'right top',
+        backgroundRepeat: 'no-repeat',
+      }}
     >
       <section 
         ref={sectionRef}
