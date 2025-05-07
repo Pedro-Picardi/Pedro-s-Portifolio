@@ -27,7 +27,7 @@ export default function Home() {
             <Profile />
             <FeaturedProject />
             <PostIt className="static max-h-[380px] flex flex-col items-center justify-start md:absolute md:top-5 md:right-5" />
-            <div className=" md:absolute md:flex-row md:bottom-5 md:right-5 flex flex-col items-center justify-center gap-4">
+            <div className=" md:absolute md:flex-row md:bottom-4 md:right-0 md:left-0 md:px-4 flex flex-col w-full items-center justify-between gap-4">
               <ProgressBar />
               <TimelineMarquee />
             </div>
