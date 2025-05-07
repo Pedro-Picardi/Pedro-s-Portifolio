@@ -3,11 +3,11 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ExternalLink, Github, ChevronDown, ChevronUp } from 'lucide-react';
+import { ExternalLink, Github, ChevronDown, ChevronUp, ImageOff } from 'lucide-react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, A11y } from 'swiper/modules';
+import { A11y } from 'swiper/modules';
 import 'swiper/css';
-import 'swiper/css/navigation';
+import 'swiper/css/a11y';
 
 // Types
 type Project = {
@@ -66,7 +66,7 @@ const ProjectTags: React.FC<{ tags: string[] }> = ({ tags }) => (
     {tags.map((tag, index) => (
       <span
         key={index}
-        className="px-3 py-1text-sm rounded-lg bg-[var(--color-background)] text-[var(--color-text-highlight)] border border-[var(--color-divider)]"
+        className="px-2 py-1 text-xs rounded-lg bg-[var(--color-grey)] text-[var(--color-text-highlight)] border border-[var(--color-divider)]"
       >
         {tag}
       </span>
@@ -88,141 +88,99 @@ const ToggleButton: React.FC<{ isExpanded: boolean; onClick: () => void }> = ({ 
   </button>
 );
 
-const ProjectCard: React.FC<{ project: Project; isExpanded: boolean }> = ({ project, isExpanded }) => (
-  <div 
-    className={`rounded-lg mb-6 overflow-hidden border border-[var(--color-divider)] bg-[var(--color-foreground)] hover:border-[var(--color-text-highlight)] transition-all duration-${TRANSITION_DURATION} ease-in-out ${isExpanded ? CARD_HEIGHTS.expanded : CARD_HEIGHTS.collapsed} flex flex-col`}
-  >
+const ProjectCard: React.FC<{ project: Project; isExpanded: boolean }> = ({ project, isExpanded }) => {
+  const [imageError, setImageError] = useState(false);
+  
+  // Log the image path for debugging
+  console.log(`Rendering image: ${project.title} - ${project.image}`);
+  
+  return (
     <div 
-      className={`relative transition-all duration-${TRANSITION_DURATION} ease-in-out ${isExpanded ? IMAGE_HEIGHTS.expanded : IMAGE_HEIGHTS.collapsed} w-full flex-shrink-0`}
+      className={`rounded-lg mb-6 overflow-hidden border border-highlight/20 bg-[var(--color-foreground)] hover:border-[var(--color-text-highlight)] transition-all duration-${TRANSITION_DURATION} ease-in-out ${isExpanded ? CARD_HEIGHTS.expanded : CARD_HEIGHTS.collapsed} flex flex-col`}
     >
-      <Image
-        src={project.image}
-        alt={project.title}
-        fill
-        className="object-contain"
-        priority={true}
-      />
-    </div>
+      <div 
+        className={`relative transition-all duration-${TRANSITION_DURATION} ease-in-out ${isExpanded ? IMAGE_HEIGHTS.expanded : IMAGE_HEIGHTS.collapsed} w-full flex-shrink-0 bg-[var(--color-background)] flex items-center justify-center`}
+      >
+        {imageError ? (
+          <div className="flex flex-col items-center justify-center h-full w-full">
+            <ImageOff className="w-10 h-10 text-[var(--color-text-subtle)]" />
+            <span className="text-xs text-[var(--color-text-subtle)] mt-2">Image not found</span>
+          </div>
+        ) : (
+          <Image
+            src={project.image}
+            alt={project.title}
+            fill
+            className="object-contain p-6"
+            priority={true}
+            onError={() => {
+              console.error(`Failed to load image: ${project.image}`);
+              setImageError(true);
+            }}
+          />
+        )}
+      </div>
 
-    <div className="p-4 flex items-start justify-between">
-      <h3 className="text-xl font-semibold text-[var(--color-text-highlight)]">
-        {project.title}
-      </h3>
-      <ProjectLinks githubUrl={project.githubUrl} liveUrl={project.liveUrl} />
-    </div>
+      <div className="p-4 flex items-start justify-between">
+        <h3 className="text-xl font-semibold text-[var(--color-text-highlight)]">
+          {project.title}
+        </h3>
+        <ProjectLinks githubUrl={project.githubUrl} liveUrl={project.liveUrl} />
+      </div>
 
-    <div 
-      className={`transition-all duration-${TRANSITION_DURATION} ease-in-out ${isExpanded ? 'opacity-100' : 'opacity-0 h-0 overflow-hidden'}`}
-    >
-      <div className="p-6 pt-0 flex flex-col flex-grow">
-        <p className="text-[var(--color-text-subtle)] mb-4 line-clamp-3">
-          {project.description}
-        </p>
-        <ProjectTags tags={project.tags} />
+      <div 
+        className={`transition-all duration-${TRANSITION_DURATION} ease-in-out ${isExpanded ? 'opacity-100' : 'opacity-0 h-0 overflow-hidden'}`}
+      >
+        <div className="p-4 pt-0 flex flex-col flex-grow">
+          <p className="text-sm text-[var(--color-text-subtle)] mb-4">
+            {project.description}
+          </p>
+          <ProjectTags tags={project.tags} />
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 // Main Component
 const ProjectCarousel: React.FC<ProjectCarouselProps> = ({ projects }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <div className="relative w-full">
-      <div className="relative">
-        <div className="swiper-fade-mask">
-          <Swiper
-            modules={[Navigation, A11y]}
-            spaceBetween={24}
-            slidesPerView={1}
-            navigation={{
-              nextEl: '.swiper-button-next',
-              prevEl: '.swiper-button-prev',
-            }}
-            breakpoints={{
-              640: { slidesPerView: 1 },
-              768: { slidesPerView: 2 },
-              1024: { slidesPerView: 3 },
-            }}
-            className="!pb-12"
-          >
-            {projects.map((project, index) => (
-              <SwiperSlide key={index}>
-                <ProjectCard project={project} isExpanded={isExpanded} />
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        </div>
+    <div className="relative w-full h-full">
+        <Swiper
+          modules={[A11y]}
+          spaceBetween={12}
+          slidesPerView={1}
+          navigation={false}
+          breakpoints={{
+            640: { slidesPerView: 1 },
+            768: { slidesPerView: 1 },
+            1024: { slidesPerView: 2 },
+          }}
+          className="!pb-12 project-carousel"
+        >
+          {projects.map((project, index) => (
+            <SwiperSlide key={index}>
+              <ProjectCard project={project} isExpanded={isExpanded} />
+            </SwiperSlide>
+          ))}
+        </Swiper>
 
         <ToggleButton isExpanded={isExpanded} onClick={() => setIsExpanded(!isExpanded)} />
 
-        <div className="swiper-button-prev !left-[-60px] !top-[50%] !translate-y-[-50%]"></div>
-        <div className="swiper-button-next !right-[-60px] !top-[50%] !translate-y-[-50%]"></div>
-      </div>
 
       <style jsx global>{`
-        .swiper-button-next,
-        .swiper-button-prev {
-          color: var(--color-text-highlight) !important;
-          background: var(--color-background);
-          border: 1px solid var(--color-divider);
-          width: 40px !important;
-          height: 40px !important;
-          border-radius: 50%;
-          opacity: 1 !important;
-        }
-        .swiper-button-next.swiper-button-disabled,
-        .swiper-button-prev.swiper-button-disabled {
-          background: var(--color-foreground) !important;
-          cursor: not-allowed;
-        }
-        .swiper-button-next:after,
-        .swiper-button-prev:after {
-          font-size: 16px !important;
-        }
-        @media (max-width: 768px) {
-          .swiper-button-next,
-          .swiper-button-prev {
-            display: none !important;
-          }
-        }
-
-        .swiper-fade-mask {
+        .project-carousel {
           position: relative;
-          overflow: hidden;
-          padding: 0 100px;
-        }
-        .swiper-fade-mask::before,
-        .swiper-fade-mask::after {
-          content: '';
-          position: absolute;
-          top: 0;
-          bottom: 0;
-          width: 100px;
-          z-index: 2;
-          pointer-events: none;
-        }
-        .swiper-fade-mask::before {
-          left: 0;
-          background: linear-gradient(to right, var(--color-background) 0%, transparent 100%);
-        }
-        .swiper-fade-mask::after {
-          right: 0;
-          background: linear-gradient(to left, var(--color-background) 0%, transparent 100%);
-        }
-        .swiper {
-          overflow: visible !important;
-          margin: 0 -100px !important;
-        }
-        .swiper-wrapper {
+          width: 100%;
           overflow: visible !important;
         }
+        
         .swiper-slide {
           opacity: 1 !important;
-        }
-        .swiper-slide:first-child {
-          padding-left: 20px !important;
+          padding-left: 10px;
+          padding-right: 10px;
         }
       `}</style>
     </div>

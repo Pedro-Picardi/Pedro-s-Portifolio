@@ -3,12 +3,59 @@
 import React, { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
 import type { CSSProperties } from "react";
+import ProjectCarousel from './ProjectCarousel';
+
+// Project type definition
+type Project = {
+  title: string;
+  description: string;
+  image: string;
+  tags: string[];
+  githubUrl?: string;
+  liveUrl?: string;
+};
+
+// API Project type (matches the structure in the API)
+type ApiProject = {
+  title: string;
+  description: string;
+  image: string;
+  tags: string[];
+  liveUrl: string;
+};
 
 const OtherProjects = () => {
   const [isHovering, setIsHovering] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  // Fetch projects from API
+  useEffect(() => {
+    const fetchProjects = async () => {
+      if (isModalOpen && projects.length === 0) {
+        setIsLoading(true);
+        try {
+          const response = await fetch('/api/projects');
+          const data = await response.json() as ApiProject[];
+          
+          // Debug log
+          console.log('Original projects data:', data);
+          
+          // Use projects directly since image paths are now correctly formatted in the API
+          setProjects(data);
+        } catch (error) {
+          console.error('Error fetching projects:', error);
+        } finally {
+          setIsLoading(false);
+        }
+      }
+    };
+
+    fetchProjects();
+  }, [isModalOpen, projects.length]);
 
   // Handle window resize and set mobile state
   useEffect(() => {
@@ -87,7 +134,7 @@ const OtherProjects = () => {
     ${isModalOpen 
       ? isMobile
         ? 'sticky top-5 left-0 right-0 mx-auto z-50 w-[90%] max-h-[90vh] overflow-y-auto'
-        : 'fixed top-1/2 left-1/2 z-50 w-[80%] max-w-xl max-h-[90vh] overflow-y-auto'
+        : 'fixed top-1/2 left-1/2 z-50 max-w-3xl max-h-[90vh] overflow-y-auto'
       : 'static md:absolute md:bottom-0 md:left-0 w-full'
     } 
     flex flex-col items-center justify-center
@@ -141,21 +188,15 @@ const OtherProjects = () => {
             style={styles.description}
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Boilerplate content for the description section */}
-            <div className="space-y-6">
-              <p className="text-highlight/80 text-lg">This section will display the list of other projects.</p>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* Project items will go here */}
-                <div className="bg-highlight/10 hover:bg-highlight/15 transition-colors duration-300 rounded-lg p-5 shadow-md hover:shadow-lg">
-                  <h3 className="text-highlight font-medium text-lg">Project Title</h3>
-                  <p className="text-highlight/70 text-sm mt-2">Project description goes here</p>
-                </div>
-                <div className="bg-highlight/10 hover:bg-highlight/15 transition-colors duration-300 rounded-lg p-5 shadow-md hover:shadow-lg">
-                  <h3 className="text-highlight font-medium text-lg">Project Title</h3>
-                  <p className="text-highlight/70 text-sm mt-2">Project description goes here</p>
-                </div>
+            {isLoading ? (
+              <div className="flex justify-center items-center py-10">
+                <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-highlight"></div>
               </div>
-            </div>
+            ) : projects.length > 0 ? (
+              <ProjectCarousel projects={projects} />
+            ) : (
+              <p className="text-highlight/80 text-lg text-center py-6">No projects found.</p>
+            )}
           </div>
         )}
       </div>
