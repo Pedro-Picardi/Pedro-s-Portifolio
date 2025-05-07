@@ -24,7 +24,7 @@ export default function Home() {
         <GridBackground>
           <div className="w-full h-full p-2 md:p-8 relative flex flex-col gap-6">
             <div className=" absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center">
-            <h1 className="text-5xl font-bold font-daniel text-left static transform -skew-y-12 bg-gradient-to-b from-highlight to-highlight/70 bg-clip-text text-transparent leading-tight py-2">Hi, I&apos;m Pedro<br/>& I dev for a living</h1>
+            <h1 className="text-5xl font-bold font-daniel text-left static transform -skew-y-12 text-highlight/80 leading-tight py-2 text-shadow-[8px_8px_20px_rgba(0,0,0,0.8)]">Hi, my name is Pedro<br/>& I dev for a living</h1>
             <Profile />
             </div>
             <FeaturedProject />
