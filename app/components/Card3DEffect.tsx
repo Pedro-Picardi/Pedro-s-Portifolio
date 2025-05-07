@@ -88,7 +88,7 @@ export function Card3DEffect({ children, className = "" }: Card3DEffectProps) {
   return (
     <section
       ref={sectionRef as React.RefObject<HTMLElement>}
-      className={`w-[95%] md:w-[75%] h-full md:h-[85%] border border-divider bg-foreground rounded-xl
+      className={`w-[95%] md:w-[75%] h-full md:h-[100%] border border-divider bg-foreground rounded-xl
         shadow-[0_20px_50px_rgba(0,0,0,0.7)]
         transition-transform duration-100 ease-out
         relative

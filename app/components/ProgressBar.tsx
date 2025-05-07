@@ -45,7 +45,7 @@ const ProgressBarItem: React.FC<ProgressBarItemProps> = ({
                 ? `${Math.min(100, 40 + (i < filled ? 60 : 0))}%`
                 : "40%",
               borderRadius: 2,
-              background: i < filled ? color : "var(--color-divider)",
+              background: i < filled ? color : "#333333",
               opacity: i < filled ? 1 : 0.3,
               transitionDelay: inView ? `${i * 15}ms` : "0ms",
               transform:

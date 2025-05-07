@@ -2,6 +2,7 @@
 
 import React, { useState, useCallback, memo, useRef, useEffect } from 'react';
 import Image from 'next/image';
+import styles from './Stack.module.css';
 
 // Tech stack data
 const TECH_STACK = [
@@ -88,7 +89,7 @@ const TechCard = memo(({
     onMouseEnter={onMouseEnter}
     onMouseLeave={onMouseLeave}
   >
-    <div className="h-16 w-16 flex items-center justify-center bg-black/50 backdrop-blur-sm border border-gray-700 rounded-full transition-all duration-300 ease-in-out hover:border-[var(--color-text-highlight)] hover:shadow-md hover:scale-110">
+    <div className="h-16 w-16 flex items-center justify-center bg-black/50 backdrop-blur-sm border border-gray-700 rounded-full transition-all duration-300 ease-in-out hover:border-[var(--color-text-highlight)] hover:shadow-[-8px_0px_36px_rgba(0,0,0,1)] hover:scale-110 shadow-[-8px_0px_20px_rgba(0,0,0,0.7)]">
       <div className="w-8 h-8 relative">
         <Image 
           src={tech.logo}
@@ -109,73 +110,10 @@ const Stack = () => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const styleId = 'tech-animations';
-    if (!document.getElementById(styleId)) {
-      const style = document.createElement('style');
-      style.id = styleId;
-      style.innerHTML = `
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(10px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .tech-stack-wrapper {
-          display: flex;
-          flex-wrap: wrap;
-          justify-content: center;
-          padding: 0;
-          margin: 0;
-          list-style: none;
-          position: relative;
-          max-width: 100%;
-          width: 100%;
-        }
-        
-        .tech-stack-wrapper li {
-          margin-left: -10px;
-          position: relative;
-        }
-        
-        .tech-stack-wrapper li:first-child {
-          margin-left: 0;
-        }
-        
-        .tech-stack-wrapper.has-wrap li:nth-child(n+8) {
-          margin-top: -20px;
-        }
-        
-        @media (max-width: 768px) {
-          .tech-stack-wrapper.has-wrap li:nth-child(n+6) {
-            margin-top: -20px;
-          }
-        }
-        
-        @media (max-width: 640px) {
-          .tech-stack-wrapper.has-wrap li:nth-child(n+5) {
-            margin-top: -20px;
-          }
-        }
-        
-        @media (max-width: 480px) {
-          .tech-stack-wrapper.has-wrap li:nth-child(n+4) {
-            margin-top: -20px;
-          }
-        }
-      `;
-      document.head.appendChild(style);
-    }
-
-    return () => {
-      const styleEl = document.getElementById(styleId);
-      if (styleEl) styleEl.remove();
-    };
-  }, []);
-
-  useEffect(() => {
     if (!containerRef.current) return;
     
     const checkForWrapping = () => {
-      const wrapper = containerRef.current?.querySelector('.tech-stack-wrapper');
+      const wrapper = containerRef.current?.querySelector(`.${styles.techStackWrapper}`);
       if (!wrapper) return;
       
       const items = Array.from(wrapper.children) as HTMLElement[];
@@ -213,10 +151,10 @@ const Stack = () => {
         </h3>
         
         <div 
-          className="relative w-full py-8 overflow-hidden"
+          className="relative w-full py-4 flex flex-col ml-2 items-center justify-center"
           ref={containerRef}
         >
-          <ul className="tech-stack-wrapper">
+          <ul className={styles.techStackWrapper}>
             {TECH_STACK.map((tech, index) => (
               <li 
                 key={tech.name}
@@ -235,9 +173,8 @@ const Stack = () => {
       
       {tooltipContent && (
         <div 
-          className="absolute w-fit opacity-0 left-1/2 transform -translate-x-1/2 z-50 shadow-[-8px_-8px_24px_rgba(0,0,0,0.4)]" 
+          className={`absolute w-fit left-1/2 transform -translate-x-1/2 z-50 shadow-[-8px_-8px_24px_rgba(0,0,0,0.4)] ${styles.tooltipVisible}`}
           style={{ 
-            animation: 'fadeIn 0.2s ease-out forwards',
             bottom: '-5rem'
           }}
         >

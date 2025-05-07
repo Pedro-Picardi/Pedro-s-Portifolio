@@ -10,7 +10,7 @@ const timelineNodes = [
   { year: '2025', text: 'Launching of Yinflow Life', poligon: 'Rocket' },
 ];
 
-// Add Present as a virtual node for the loop
+// Add Present as a virtual node for the divid
 const timelineWithPresent = [...timelineNodes, { present: true }];
 const marqueeData = [...timelineWithPresent, ...timelineWithPresent];
 
@@ -198,7 +198,7 @@ const TimelineMarquee: React.FC = () => {
       <div className="pointer-events-none absolute left-0 top-0 h-full w-12 z-30" style={{background: 'linear-gradient(to right, var(--color-foreground), transparent)'}} />
       <div className="pointer-events-none absolute right-0 top-0 h-full w-12 z-30" style={{background: 'linear-gradient(to left, var(--color-foreground), transparent)'}} />
       {/* Timeline line */}
-      <div className="absolute left-0 right-0 top-1/2 h-[2px] bg-[var(--color-divider)] z-0" style={{ transform: 'translateY(-50%)' }} />
+      <div className="absolute left-0 right-0 top-1/2 h-[2px] bg-highlight/20 z-0" style={{ transform: 'translateY(-50%)' }} />
       <div
         className="flex gap-16 w-max relative"
         ref={marqueeRef}
