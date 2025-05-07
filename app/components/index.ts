@@ -5,3 +5,5 @@ export { default as TimelineMarquee } from './TimelineMarquee';
 export { default as ProgressBar } from './ProgressBar';
 export { default as FeaturedProject } from './FeaturedProject';
 export { default as Profile } from './Profile';
+export { default as OtherProjects } from './OtherProjects';
+export { default as Stack } from './Stack';

@@ -111,7 +111,7 @@ const FeaturedProject = ({
       ? isMobile
         ? 'sticky top-5 left-0 right-0 mx-auto z-50 w-[90%] max-h-[90vh] overflow-y-auto'
         : 'fixed top-1/2 left-1/2 z-50 w-[80%] max-w-xl max-h-[90vh] overflow-y-auto'
-      : 'static md:absolute md:top-5 md:left-5'
+      : 'static md:absolute md:top-0 md:left-0'
     } 
     flex flex-col items-left justify-center
     bg-foreground backdrop-blur-md border border-highlight/20 rounded-xl p-4 gap-4 
