@@ -5,7 +5,7 @@ import {
   TimelineMarquee,
   ProgressBar,
   FeaturedProject,
-  Profile,
+  Profile
 } from "./components";
 
 export default function Home() {

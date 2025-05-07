@@ -21,7 +21,7 @@ export const PostIt = ({ className = '' }: PostItProps) => {
   return (
     <div className={`${className}`}>
       {/* First Post-it */}
-      <div className={`md:max-w-min group relative md:-translate-x-20 transition-all ${activePostIt === 0 ? 'z-30' : 'z-10 hover:z-20'}`}>
+      <div className={`md:max-w-min group bg-grey relative md:-translate-x-20 transition-all ${activePostIt === 0 ? 'z-30' : 'z-10 hover:z-20'}`}>
         <div 
           className={`w-full md:w-[240px] min-h-[240px] p-4 bg-grey border border-highlight/20 rounded-lg text-highlight font-serif italic transform transition-all duration-300 ease-in-out cursor-pointer
           ${activePostIt === 0 
