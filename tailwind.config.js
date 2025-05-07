@@ -17,6 +17,10 @@ module.exports = {
         accent: '#78a081',
         subtle: '#9f9f9f',
       },
+      fontFamily: {
+        'daniel': ['Daniel', 'sans-serif'],
+        'silkamono': ['SilkaMono', 'monospace'],
+      },
     },
   },
   plugins: [],

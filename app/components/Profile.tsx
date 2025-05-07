@@ -100,7 +100,7 @@ const Profile = () => {
   const renderSphere = () => (
     <div 
       ref={containerRef}
-      className="relative w-[280px] h-[280px]"
+      className="static w-[280px] h-[280px]"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
@@ -203,7 +203,7 @@ const Profile = () => {
   );
   
   return (
-    <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+    <div className="relative">
       <div className="relative">
         {renderSphere()}
         {renderTextElements()}
