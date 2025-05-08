@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
 import type { CSSProperties } from "react";
 import ProjectCarousel from './ProjectCarousel';
+import BatterySpline from './BatterySpline';
 
 // Project type definition
 type Project = {
@@ -163,10 +164,15 @@ const OtherProjects = () => {
       >
         {/* Header */}
         <div 
-          className="flex justify-between items-center w-full"
+          className="flex justify-between items-center w-full h-full"
           style={styles.animated(150)}
         >
-          <h1 className="text-2xl font-bold text-highlight">Other Projects</h1>
+          <div className="flex items-center gap-4 w-full h-[120px]">
+            <h1 className="absolute top-0 left-0 z-50 text-2xl font-bold text-highlight">Other Projects</h1>
+            <div className=" absolute z-30 w-full h-full">
+              <BatterySpline />
+            </div>
+          </div>
           {isModalOpen && (
             <button 
               onClick={(e) => {

@@ -29,7 +29,7 @@ export default function Home() {
             <h1 className="text-2xl 2xl:text-3.5xl font-bold font-daniel text-left static transform -skew-y-12 text-highlight/80 leading-normal py-2 text-shadow-[8px_8px_20px_rgba(0,0,0,0.8)]">Hi, my name is Pedro<br/>& I DEV for a living</h1>
             <Profile />
             </div>
-            <div data-name="featured-project" className="flex md:absolute md:top-4 md:left-4 flex-col items-center gap-4 md:h-[340px] md:w-[400px] justify-between">
+            <div data-name="featured-project" className="flex md:absolute md:top-4 md:left-4 flex-col items-center gap-4 md:h-[425px] md:w-[400px] justify-between">
             <FeaturedProject />
             <OtherProjects />
             </div>
