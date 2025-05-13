@@ -178,7 +178,7 @@ const Stack = () => {
             bottom: '-5rem'
           }}
         >
-          <div className="bg-[var(--color-background)]/50 text-[var(--color-text-highlight)] text-sm rounded-xl backdrop-blur-xl shadow-lg p-4 border border-highlight/40">
+          <div className="bg-[var(--color-background)]/50 text-[var(--color-text-highlight)] text-sm rounded-xl backdrop-blur-xl shadow-lg p-2 border border-highlight/40">
             <div className="font-bold text-md mb-1">{tooltipContent.name}</div>
             <div className="text-xs text-[var(--color-text-subtle)]">{tooltipContent.description}</div>
           </div>

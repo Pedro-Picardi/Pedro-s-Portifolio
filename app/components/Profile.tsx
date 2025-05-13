@@ -7,7 +7,7 @@ const TEXT_ELEMENTS = [
   { 
     text: "Pedro Picardi", 
     delay: 0, 
-    className: "text-[1.75rem] font-bold text-white", 
+    className: "text-[1.75rem] font-black text-white", 
     style: { top: "80px" } 
   },
   { 
@@ -182,7 +182,7 @@ const Profile = () => {
           className="absolute whitespace-nowrap"
           style={{
             ...item.style,
-            left: '150px', 
+            left: '130px', 
             opacity: isHovering ? 1 : 0,
             transform: isHovering ? 'translateX(160px)' : 'translateX(0)',
             transition: `all 600ms ${CUBIC_BEZIER} ${item.delay}ms`,
