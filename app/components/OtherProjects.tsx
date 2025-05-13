@@ -183,7 +183,7 @@ const OtherProjects = () => {
         {/* Modal description content - only shown when modal is open */}
         {isModalOpen && (
           <div
-            className="w-full mt-4 space-y-6 relative z-10"
+            className="w-[92%] relative z-10"
             style={styles.description}
             onClick={(e) => e.stopPropagation()}
           >

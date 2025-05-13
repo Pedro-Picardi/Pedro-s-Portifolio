@@ -5,9 +5,10 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ExternalLink, Github, ChevronDown, ChevronUp, ImageOff } from 'lucide-react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { A11y } from 'swiper/modules';
+import { A11y, Navigation } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/a11y';
+import 'swiper/css/navigation';
 
 // Types
 type Project = {
@@ -77,7 +78,7 @@ const ProjectTags: React.FC<{ tags: string[] }> = ({ tags }) => (
 const ToggleButton: React.FC<{ isExpanded: boolean; onClick: () => void }> = ({ isExpanded, onClick }) => (
   <button
     onClick={onClick}
-    className="absolute cursor-pointer left-[50%] bottom-[-0px] translate-x-[-50%] p-1 rounded-full bg-[var(--color-background)] border border-[var(--color-divider)] hover:bg-[var(--color-background)]/80 transition-colors z-10 w-10 h-10 flex items-center justify-center"
+    className="absolute cursor-pointer left-[50%] bottom-[-0px] translate-x-[-50%] p-1 rounded-full bg-[var(--color-background)]/20 backdrop-blur-3xl transition-colors z-10 w-10 h-10 flex items-center justify-center"
     aria-label={isExpanded ? 'Collapse projects' : 'Expand projects'}
   >
     {isExpanded ? (
@@ -96,10 +97,10 @@ const ProjectCard: React.FC<{ project: Project; isExpanded: boolean }> = ({ proj
   
   return (
     <div 
-      className={`rounded-lg mb-6 overflow-hidden border border-highlight/20 bg-[var(--color-foreground)] hover:border-[var(--color-text-highlight)] transition-all duration-${TRANSITION_DURATION} ease-in-out ${isExpanded ? CARD_HEIGHTS.expanded : CARD_HEIGHTS.collapsed} flex flex-col`}
+      className={`rounded-lg mb-6 overflow-hidden border border-highlight/20 bg-[var(--color-foreground)]/10 backdrop-blur-3xl hover:border-[var(--color-text-highlight)] transition-all duration-${TRANSITION_DURATION} ease-in-out ${isExpanded ? CARD_HEIGHTS.expanded : CARD_HEIGHTS.collapsed} flex flex-col`}
     >
       <div 
-        className={`relative transition-all duration-${TRANSITION_DURATION} ease-in-out ${isExpanded ? IMAGE_HEIGHTS.expanded : IMAGE_HEIGHTS.collapsed} w-full flex-shrink-0 bg-[var(--color-background)] flex items-center justify-center`}
+        className={`relative transition-all duration-${TRANSITION_DURATION} ease-in-out ${isExpanded ? IMAGE_HEIGHTS.expanded : IMAGE_HEIGHTS.collapsed} w-full flex-shrink-0 bg-transparent flex items-center justify-center`}
       >
         {imageError ? (
           <div className="flex flex-col items-center justify-center h-full w-full">
@@ -149,16 +150,16 @@ const ProjectCarousel: React.FC<ProjectCarouselProps> = ({ projects }) => {
   return (
     <div className="relative w-full h-full">
         <Swiper
-          modules={[A11y]}
+          modules={[A11y, Navigation]}
           spaceBetween={12}
           slidesPerView={1}
-          navigation={false}
+          navigation={true}
           breakpoints={{
             640: { slidesPerView: 1 },
             768: { slidesPerView: 1 },
             1024: { slidesPerView: 2 },
           }}
-          className="!pb-12 project-carousel"
+          className="!w-full !pb-6 project-carousel"
         >
           {projects.map((project, index) => (
             <SwiperSlide key={index}>
@@ -176,11 +177,54 @@ const ProjectCarousel: React.FC<ProjectCarouselProps> = ({ projects }) => {
           width: 100%;
           overflow: visible !important;
         }
-        
+        .swiper-wrapper {
+
+        }
         .swiper-slide {
-          opacity: 1 !important;
-          padding-left: 10px;
-          padding-right: 10px;
+        }
+        
+        .swiper-button-disabled {
+          color: var(--color-highlight)/40 !important;
+          cursor: not-allowed;
+          background-color: var(--color-background)/80;
+          backdrop-filter: blur(10px);
+        }
+        
+        .swiper-button-prev{
+          width: 44px !important;
+          height: 44px !important;
+          position: absolute;
+          top: 50%;
+          left: -44px;
+          right: auto;
+          border-radius: 50%;
+          background-color: var(--color-background)/80;
+          backdrop-filter: blur(10px);
+          color: var(--color-highlight) !important;
+          transition: all 0.3s ease;
+        }
+        .swiper-button-next {
+          width: 44px !important;
+          height: 44px !important;
+          position: absolute;
+          top: 50%;
+          right: -44px;
+          border-radius: 50%;
+          background-color: var(--color-background)/80;
+          backdrop-filter: blur(10px);
+          color: var(--color-highlight) !important;
+          transition: all 0.3s ease;
+        }
+        
+        .swiper-button-prev:hover,
+        .swiper-button-next:hover {
+          background-color: var(--color-background)/80;
+        }
+        
+        .swiper-button-prev:after,
+        .swiper-button-next:after {
+          font-size: 18px !important;
+          font-weight: bold;
         }
       `}</style>
     </div>

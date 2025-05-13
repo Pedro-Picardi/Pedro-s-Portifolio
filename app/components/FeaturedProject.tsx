@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import { X, ExternalLink, Github } from "lucide-react";
+import { X, ExternalLink, Github, Apple, Smartphone, Globe } from "lucide-react";
 import Link from "next/link";
 import type { CSSProperties } from "react";
 
@@ -13,15 +13,17 @@ interface ProjectProps {
   technologies: string[];
   demoUrl?: string;
   githubUrl?: string;
+  availability?: Array<"ios" | "android" | "web">;
 }
 
 const defaultProject: ProjectProps = {
   title: "Yinflow.Life",
-  description: "A comprehensive productivity suite built with React, Node.js, and MongoDB. This application features real-time collaboration, task management, and integrated chat functionality.",
+  description: "Yinflow Life is a health and wellness platform that build a bridge between the user and doctors, psychologists and therapists.",
   imageSrc: "/assets/yinflow_app_cover.png",
-  technologies: ["React", "Node.js", "MongoDB", "Socket.io"],
-  demoUrl: "https://example.com/project",
-  githubUrl: "https://github.com/username/project"
+  technologies: ["React", "SQL", "Flutter", "WA API", "OneSignal", "Node.Js", "Express", "Directus.io"],
+  demoUrl: "https://yinflow.life",
+  githubUrl: "https://github.com/yinflowltda/app-yinflow.life",
+  availability: ["ios", "android", "web"]
 };
 
 const FeaturedProject = ({ 
@@ -30,7 +32,8 @@ const FeaturedProject = ({
   imageSrc = defaultProject.imageSrc,
   technologies = defaultProject.technologies,
   demoUrl = defaultProject.demoUrl,
-  githubUrl = defaultProject.githubUrl
+  githubUrl = defaultProject.githubUrl,
+  availability = defaultProject.availability
 }: Partial<ProjectProps>) => {
   const [isHovering, setIsHovering] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -175,6 +178,34 @@ const FeaturedProject = ({
           />
         </div>
         
+        {/* Availability indicator */}
+        {availability && availability.length > 0 && (
+          <div 
+            className="absolute bottom-2 right-2 p-2 bg-foreground/60 backdrop-blur-sm rounded-lg flex items-center gap-2 text-xs text-highlight/80 border border-highlight/10"
+            onClick={(e) => e.stopPropagation()}
+            style={styles.animated(250)}
+          >
+            <span>available on:</span>
+            <div className="flex gap-1.5">
+              {availability.includes("ios") && (
+                <span className="p-1 bg-highlight/10 rounded-full" title="iOS">
+                  <Apple size={14} className="text-highlight" />
+                </span>
+              )}
+              {availability.includes("android") && (
+                <span className="p-1 bg-highlight/10 rounded-full" title="Android">
+                  <Smartphone size={14} className="text-highlight" />
+                </span>
+              )}
+              {availability.includes("web") && (
+                <span className="p-1 bg-highlight/10 rounded-full" title="Web">
+                  <Globe size={14} className="text-highlight" />
+                </span>
+              )}
+            </div>
+          </div>
+        )}
+        
         {/* Project description - only shown in modal */}
         {isModalOpen && (
           <div 
@@ -204,7 +235,7 @@ const FeaturedProject = ({
                   className="flex items-center gap-1 text-sm text-highlight hover:text-highlight/80 transition-colors"
                 >
                   <ExternalLink size={16} />
-                  <span>Live Demo</span>
+                  <span>Visit Website</span>
                 </Link>
               )}
               

@@ -72,9 +72,8 @@ export const PostIt = ({ className = "" }: PostItProps) => {
               Between the Client and the Server, side by side, An engineer
               stands, a balance with steady stride. Shifting the weight of
               endless data&apos;s flow, Guiding it through the Web where secrets go.
-              Coding is math, a logic firm and clear, But programming? It&apos;s art,
+              Coding is math, a logic firm and clear, But programming? It&apos;s art, where visions appear.
               {" "}
-              <Highlight isClicked={activePostIt === 1}>where visions appear.</Highlight>
               <Quote className="inline-block h-6 w-6 mb-1 ml-1 transition-colors duration-200" />
             </p>
           </div>
