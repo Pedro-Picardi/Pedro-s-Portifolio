@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import NavBar from "./components/NavBar";
 import LinkBar from "./components/LinkBar";
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 export const metadata: Metadata = {
   title: "Pedro's Portifolio",
@@ -20,6 +21,7 @@ export default function RootLayout({
         <NavBar />
         {children}
         <LinkBar />
+        <SpeedInsights />
         </body>
     </html>
   );
