@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import NavBar from "./components/NavBar";
+import LinkBar from "./components/LinkBar";
 
 export const metadata: Metadata = {
   title: "Pedro's Portifolio",
@@ -14,7 +16,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`antialiased`}>{children}</body>
+      <body className={`antialiased`}>
+        <NavBar />
+        {children}
+        <LinkBar />
+        </body>
     </html>
   );
 }
