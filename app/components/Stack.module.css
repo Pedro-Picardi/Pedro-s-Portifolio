@@ -3,6 +3,11 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
+@keyframes fadeOut {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(10px); }
+}
+
 .techStackWrapper {
   display: flex;
   flex-wrap: wrap;
@@ -19,7 +24,7 @@
   margin-left: -12px;
   margin-top: -8px;
   position: relative;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 @media (max-width: 768px) {
@@ -53,5 +58,13 @@
 }
 
 .tooltipVisible {
-  animation: fadeIn 0.2s ease-out forwards;
+  animation: fadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.tooltipHidden {
+  animation: fadeOut 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  opacity: 0;
+  transform: translateY(10px);
 } 

@@ -162,7 +162,7 @@ const TimelineMarquee: React.FC = () => {
 
   return (
     <div 
-      className=" w-full md:max-w-md max-h-[250px] bg-foreground/90 backdrop-blur-md border border-highlight/20 rounded-xl"
+      className=" w-full md:max-w-md max-h-[250px] mt-16 mb-4 md:mt-0 md:mb-0 bg-foreground/90 backdrop-blur-md border border-highlight/20 rounded-xl"
       style={{
         transition: 'all 0.4s cubic-bezier(0.33, 1, 0.68, 1)',
         transform: isContainerHovering ? 'translateY(-6px) scale(1) rotateX(1deg)' : 'translateY(0) scale(1) rotateX(0)',

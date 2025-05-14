@@ -3,7 +3,7 @@ import { Github, Instagram, FileText, Linkedin } from 'lucide-react'
 
 const LinkBar = () => {
   return (
-    <div className='absolute bottom-3 left-0 right-0 mx-auto md:w-[800px] w-[90%] h-9 bg-background/50 backdrop-blur-sm z-50 flex items-center justify-center'>
+    <div className=' static mb-6 md:mb-0 md:absolute md:bottom-3 md:left-0 md:right-0 mx-auto md:w-[800px] w-[90%] h-9 bg-background/50 backdrop-blur-sm z-50 flex items-center justify-center'>
         <div className='flex items-center justify-center gap-4'>
             <div className='flex gap-3'>
                 <a href='https://github.com/Pedro-Picardi' target='_blank' rel='noopener noreferrer' className='text-muted-foreground text-highlight/40 hover:text-highlight transition-transform duration-200 hover:scale-110'>

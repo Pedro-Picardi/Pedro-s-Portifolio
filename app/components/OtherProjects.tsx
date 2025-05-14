@@ -125,7 +125,7 @@ const OtherProjects = () => {
         ? isMobile
           ? "sticky top-5 left-0 right-0 mx-auto z-50 w-[90%] max-h-[90vh] overflow-y-auto"
           : "fixed top-1/2 left-1/2 z-50 max-w-3xl max-h-[90vh] overflow-y-auto"
-        : "absolute  w-full md:w-full md:h-[140px] md:bottom-4 md:left-0"
+        : "md:absolute static w-full h-[115px] md:h-[140px] md:bottom-4 md:left-0"
     } 
     flex flex-col items-center justify-center
     bg-foreground/80 backdrop-blur-md border border-highlight/20 rounded-xl p-4 gap-4 
@@ -137,8 +137,10 @@ const OtherProjects = () => {
   return (
     <>
       {/* Backdrop overlay */}
-      <div
-        className="fixed inset-0 bg-black/20 backdrop-blur-md z-40 overflow-hidden"
+      <div data-name="backdrop"
+        className={`fixed inset-0 bg-black/20 backdrop-blur-md z-40 ${
+          isMobile && isModalOpen ? "overflow-y-auto" : "overflow-hidden"
+        }`}
         onClick={() => toggleModal(false)}
         style={styles.backdrop}
       />

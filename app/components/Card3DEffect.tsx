@@ -10,10 +10,28 @@ interface Card3DEffectProps {
 export function Card3DEffect({ children, className = "" }: Card3DEffectProps) {
   const sectionRef = useRef<HTMLElement>(null);
   const [mousePosition, setMousePosition] = useState({ x: 0.5, y: 0.5 });
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    // Check if device is mobile based on screen width
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    // Initial check
+    checkMobile();
+    
+    // Add resize listener
+    window.addEventListener('resize', checkMobile);
+    
+    return () => {
+      window.removeEventListener('resize', checkMobile);
+    };
+  }, []);
 
   useEffect(() => {
     const section = sectionRef.current;
-    if (!section) return;
+    if (!section || isMobile) return;
 
     // Track mouse movement
     const handleMouseMove = (e: MouseEvent) => {
@@ -75,26 +93,26 @@ export function Card3DEffect({ children, className = "" }: Card3DEffectProps) {
       document.removeEventListener("mouseleave", handleMouseLeave);
       document.removeEventListener("mouseenter", handleMouseEnter);
     };
-  }, []);
+  }, [isMobile]);
 
   // Calculate dynamic lighting angles based on mouse position
   const lightingStyles = {
     "--light-position-x": `${mousePosition.x * 100}%`,
     "--light-position-y": `${mousePosition.y * 100}%`,
     "--light-distance": "300px", // Much shorter distance for falloff
-    "--light-opacity": "0.05", // Even more subtle opacity
+    "--light-opacity": isMobile ? "0" : "0.05", // Disable lighting effect on mobile
   } as React.CSSProperties;
 
   return (
     <section
       ref={sectionRef as React.RefObject<HTMLElement>}
       className={`w-[95%] md:w-[75%] h-full md:h-[100%] border border-divider bg-foreground rounded-xl
-        shadow-[0_20px_50px_rgba(0,0,0,0.7)]
+        ${!isMobile ? `shadow-[0_20px_50px_rgba(0,0,0,0.7)]
         transition-transform duration-100 ease-out
         relative
         before:absolute before:inset-0 before:rounded-xl before:pointer-events-none
         before:bg-[radial-gradient(circle_50px_at_var(--light-position-x)_var(--light-position-y),rgba(255,255,255,var(--light-opacity))_0%,transparent_var(--light-distance))]
-        before:blur-[8px]
+        before:blur-[8px]` : 'shadow-lg'}
         ${className}`}
       style={lightingStyles}
     >

@@ -78,18 +78,21 @@ type TechItem = {
 const TechCard = memo(({ 
   tech, 
   onMouseEnter, 
-  onMouseLeave
+  onMouseLeave,
+  onTouchStart,
 }: { 
   tech: TechItem; 
   onMouseEnter: () => void; 
   onMouseLeave: () => void;
+  onTouchStart: () => void;
 }) => (
   <div 
     className="group h-16 w-16 relative flex items-center justify-center"
     onMouseEnter={onMouseEnter}
     onMouseLeave={onMouseLeave}
+    onTouchStart={onTouchStart}
   >
-    <div className="h-16 w-16 flex items-center justify-center bg-black/50 backdrop-blur-sm border border-gray-700 rounded-full transition-all duration-300 ease-in-out hover:border-[var(--color-text-highlight)] hover:shadow-[-8px_0px_36px_rgba(0,0,0,1)] hover:scale-110 shadow-[-8px_0px_20px_rgba(0,0,0,0.7)]">
+    <div className="h-16 w-16 flex items-center justify-center bg-black/50 backdrop-blur-sm border border-gray-700 rounded-full transition-all duration-300 ease-in-out hover:border-[var(--color-text-highlight)] hover:shadow-[-8px_0px_36px_rgba(0,0,0,1)] hover:scale-110 shadow-[-8px_0px_20px_rgba(0,0,0,0.7)] active:border-[var(--color-text-highlight)] active:shadow-[-8px_0px_36px_rgba(0,0,0,1)] active:scale-110">
       <div className="w-8 h-8 relative">
         <Image 
           src={tech.logo}
@@ -106,9 +109,33 @@ const TechCard = memo(({
 TechCard.displayName = 'TechCard';
 
 const Stack = () => {
-  const [tooltipContent, setTooltipContent] = useState<TechItem | null>(null);
+  // Refs
   const containerRef = useRef<HTMLDivElement>(null);
-
+  const dismissTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  
+  // States
+  const [activeTooltip, setActiveTooltip] = useState<{
+    content: TechItem | null;
+    state: 'inactive' | 'entering' | 'active' | 'leaving';
+  }>({
+    content: null,
+    state: 'inactive'
+  });
+  
+  // Derived state
+  const isTooltipVisible = activeTooltip.state === 'entering' || activeTooltip.state === 'active';
+  const isTooltipLeaving = activeTooltip.state === 'leaving';
+  
+  // Clear dismiss timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (dismissTimeoutRef.current) {
+        clearTimeout(dismissTimeoutRef.current);
+      }
+    };
+  }, []);
+  
+  // Check for wrapping of tech stack items
   useEffect(() => {
     if (!containerRef.current) return;
     
@@ -132,16 +159,77 @@ const Stack = () => {
     
     checkForWrapping();
     
-    return () => resizeObserver.disconnect();
-  }, []);
-
-  const handleTechHover = useCallback((tech: TechItem) => {
-    setTooltipContent(tech);
+    return () => {
+      resizeObserver.disconnect();
+    };
   }, []);
   
-  const handleTechLeave = useCallback(() => {
-    setTooltipContent(null);
-  }, []);
+  // Handle showing tooltip
+  const showTooltip = useCallback((tech: TechItem) => {
+    // Clear any dismiss timeout
+    if (dismissTimeoutRef.current) {
+      clearTimeout(dismissTimeoutRef.current);
+      dismissTimeoutRef.current = null;
+    }
+    
+    // Update active tooltip state based on current state
+    setActiveTooltip(prev => {
+      // If tooltip is not already visible, trigger enter animation
+      if (prev.state === 'inactive' || prev.state === 'leaving') {
+        return { content: tech, state: 'entering' };
+      }
+      
+      // If tooltip is already visible, just update content
+      // This prevents re-triggering the animation
+      return { content: tech, state: 'active' };
+    });
+    
+    // Transition from entering to active state after animation completes
+    if (activeTooltip.state === 'entering') {
+      const enterAnimationDuration = 300; // Match CSS animation duration
+      setTimeout(() => {
+        setActiveTooltip(prev => 
+          prev.state === 'entering' ? { ...prev, state: 'active' } : prev
+        );
+      }, enterAnimationDuration);
+    }
+  }, [activeTooltip.state]);
+  
+  // Handle hiding tooltip
+  const hideTooltip = useCallback(() => {
+    // Only hide if tooltip is currently visible
+    if (activeTooltip.state === 'entering' || activeTooltip.state === 'active') {
+      setActiveTooltip(prev => ({ ...prev, state: 'leaving' }));
+      
+      // Reset to inactive after leaving animation completes
+      const leaveAnimationDuration = 300; // Match CSS animation duration
+      setTimeout(() => {
+        setActiveTooltip(prev => 
+          prev.state === 'leaving' ? { content: null, state: 'inactive' } : prev
+        );
+      }, leaveAnimationDuration);
+    }
+  }, [activeTooltip.state]);
+  
+  // Events for desktop
+  const handleMouseEnter = useCallback((tech: TechItem) => {
+    showTooltip(tech);
+  }, [showTooltip]);
+  
+  const handleMouseLeave = useCallback(() => {
+    hideTooltip();
+  }, [hideTooltip]);
+  
+  // Events for mobile
+  const handleTouchStart = useCallback((tech: TechItem) => {
+    showTooltip(tech);
+    
+    // Set timeout to hide tooltip after 3 seconds
+    dismissTimeoutRef.current = setTimeout(() => {
+      hideTooltip();
+      dismissTimeoutRef.current = null;
+    }, 3000);
+  }, [showTooltip, hideTooltip]);
   
   return (
     <section className="w-full flex flex-col items-center justify-center relative">
@@ -162,8 +250,9 @@ const Stack = () => {
               >
                 <TechCard 
                   tech={tech}
-                  onMouseEnter={() => handleTechHover(tech)}
-                  onMouseLeave={handleTechLeave}
+                  onMouseEnter={() => handleMouseEnter(tech)}
+                  onMouseLeave={handleMouseLeave}
+                  onTouchStart={() => handleTouchStart(tech)}
                 />
               </li>
             ))}
@@ -171,16 +260,17 @@ const Stack = () => {
         </div>
       </div>
       
-      {tooltipContent && (
+      {activeTooltip.content && (
         <div 
-          className={`absolute w-fit left-1/2 transform -translate-x-1/2 z-50 shadow-[-8px_-8px_24px_rgba(0,0,0,0.4)] ${styles.tooltipVisible}`}
+          className={`absolute w-full md:w-fit left-1/2 transform -translate-x-1/2 z-50 shadow-[-8px_-8px_24px_rgba(0,0,0,0.4)] ${isTooltipVisible ? styles.tooltipVisible : ''} ${isTooltipLeaving ? styles.tooltipHidden : ''}`}
           style={{ 
-            bottom: '-5rem'
+            bottom: '-5rem',
+            pointerEvents: 'none', // Prevent tooltip from interfering with mouse events
           }}
         >
           <div className="bg-[var(--color-background)]/50 text-[var(--color-text-highlight)] text-sm rounded-xl backdrop-blur-xl shadow-lg p-2 border border-highlight/40">
-            <div className="font-bold text-md mb-1">{tooltipContent.name}</div>
-            <div className="text-xs text-[var(--color-text-subtle)]">{tooltipContent.description}</div>
+            <div className="font-bold text-md mb-1">{activeTooltip.content.name}</div>
+            <div className="text-xs text-[var(--color-text-subtle)]">{activeTooltip.content.description}</div>
           </div>
         </div>
       )}
