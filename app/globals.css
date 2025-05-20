@@ -1,3 +1,6 @@
+@import "tailwindcss/preflight";
+@tailwind utilities;
+
 @import "tailwindcss";
 
 @font-face {
@@ -32,6 +35,95 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'HaloGrotesk';
+  src: url('/fonts/HaloGrotesk-Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Ginka Fonts */
+@font-face {
+  font-family: 'Ginka';
+  src: url('/fonts/ginka-Regular-BF65f258f795096.otf') format('opentype');
+  font-weight: 400; /* normal */
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Ginka';
+  src: url('/fonts/ginka-Italic-BF65f258f847c58.otf') format('opentype');
+  font-weight: 400; /* normal */
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Ginka';
+  src: url('/fonts/ginka-Light-BF65f258f847c3d.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Ginka';
+  src: url('/fonts/ginka-LightItalic-BF65f258f87f8a8.otf') format('opentype');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Ginka';
+  src: url('/fonts/ginka-Book-BF65f258f848a04.otf') format('opentype');
+  font-weight: 400; /* Book is often similar to normal/regular */
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Ginka';
+  src: url('/fonts/ginka-BookItalic-BF65f258f882908.otf') format('opentype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Ginka';
+  src: url('/fonts/ginka-Medium-BF65f258f833c9d.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Ginka';
+  src: url('/fonts/ginka-MediumItalic-BF65f258f898f35.otf') format('opentype'); /* Assuming this path is correct for MediumItalic */
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Ginka';
+  src: url('/fonts/ginka-Bold-BF65f258f8a2915.otf') format('opentype');
+  font-weight: 700; /* bold */
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Ginka';
+  src: url('/fonts/ginka-BoldItalic-BF65f258f898f35.otf') format('opentype');
+  font-weight: 700; /* bold */
+  font-style: italic;
+  font-display: swap;
+}
+
 :root {
   /* Dark theme (default) */
   --deep-background: #000000;
@@ -47,6 +139,7 @@
   /* Font families */
   --font-daniel: 'Daniel', sans-serif;
   --font-silkamono: 'SilkaMono', monospace;
+  --font-halogrotesk: 'HaloGrotesk', sans-serif;
 }
 
 @theme inline {
@@ -58,16 +151,17 @@
   --color-divider-light: var(--divider-light);
   --color-highlight: var(--highlight);
   --color-subtle: var(--subtle);
-  --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --font-daniel: var(--font-daniel);
   --font-silkamono: var(--font-silkamono);
+  --font-halogrotesk: var(--font-halogrotesk);
+
 }
 
 body {
   background: var(--background);
   color: var(--highlight);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
 }
 
 /* Text selection styling */

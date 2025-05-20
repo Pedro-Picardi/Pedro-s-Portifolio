@@ -62,7 +62,7 @@ export function Card3DEffect({ children, className = "" }: Card3DEffectProps) {
 
       // Apply the transformation
       section.style.transform = `
-        perspective(1200px) 
+        perspective(6000px) 
         rotateX(${rotateX}deg) 
         rotateY(${rotateY}deg)
       `;
@@ -106,7 +106,7 @@ export function Card3DEffect({ children, className = "" }: Card3DEffectProps) {
   return (
     <section
       ref={sectionRef as React.RefObject<HTMLElement>}
-      className={`w-[95%] md:w-[75%] h-full md:h-[100%] border border-divider bg-foreground rounded-xl
+      className={`w-[95%] md:w-[75%] max-w-[1500px] max-h-[880px] h-full md:h-[100%] border border-divider bg-background/80 backdrop-blur-3xl rounded-xl
         ${!isMobile ? `shadow-[0_20px_50px_rgba(0,0,0,0.7)]
         transition-transform duration-100 ease-out
         relative

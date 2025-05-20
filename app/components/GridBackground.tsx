@@ -19,8 +19,8 @@ export const GridBackground: React.FC<GridBackgroundProps> = ({
 }) => {
   // Constants
   const COLORS = {
-    background: "var(--background)",
-    mainGrid: "var(--divider)",
+    background: "#000000",
+    mainGrid: "#1a1a1a",
     subGrid: "var(--divider-light)",
     tertiaryGrid: "var(--divider-light)",
     highlight: "var(--highlight)",
@@ -113,7 +113,7 @@ export const GridBackground: React.FC<GridBackgroundProps> = ({
   return (
     <div
       className={`
-        relative w-full h-full border border-divider rounded-xl
+        relative w-full h-full border border-grey/70 rounded-xl
         ${className}
       `}
       style={gridStyles}

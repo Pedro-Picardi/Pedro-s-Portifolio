@@ -20,6 +20,8 @@ module.exports = {
       fontFamily: {
         'daniel': ['Daniel', 'sans-serif'],
         'silkamono': ['SilkaMono', 'monospace'],
+        'halogrotesk': ['HaloGrotesk', 'sans-serif'],
+        'ginka': ['Ginka', 'sans-serif'],
       },
       keyframes: {
         marquee: {
