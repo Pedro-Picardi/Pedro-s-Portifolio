@@ -11,6 +11,7 @@ import {
   AnimateIn,
   PageAnimationWrapper
 } from "./components";
+import LinkBar from "./components/LinkBar";
 
 export default function Home() {
   // Staggered animation sequence
@@ -81,6 +82,7 @@ export default function Home() {
           </GridBackground>
         </Card3DEffect>
       </PageAnimationWrapper>
+      <LinkBar />
     </main>
   );
 }

@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import NavBar from "./components/NavBar";
-import LinkBar from "./components/LinkBar";
 import { SpeedInsights } from "@vercel/speed-insights/next"
 
 export const metadata: Metadata = {
@@ -20,7 +19,6 @@ export default function RootLayout({
       <body className={`antialiased`}>
         <NavBar />
         {children}
-        <LinkBar />
         <SpeedInsights />
       </body>
     </html>

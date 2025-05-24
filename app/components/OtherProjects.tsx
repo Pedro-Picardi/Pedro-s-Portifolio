@@ -164,7 +164,7 @@ const OtherProjects = () => {
         
         <div className="flex justify-between items-center w-full h-full relative z-10">
           <div className="flex items-center gap-4 w-full">
-            <h3 className="text-xl font-medium text-highlight">
+            <h3 className="text-xl font-halogrotesk text-highlight">
               Other Projects
             </h3>
           </div>

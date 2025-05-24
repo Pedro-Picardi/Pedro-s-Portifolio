@@ -144,7 +144,7 @@ const FeaturedProject = ({
           className="flex justify-between items-center"
           style={styles.animated(150)}
         >
-          <h3 className="text-xl font-medium text-highlight">Featured Project</h3>
+          <h3 className="text-xl font-halogrotesk text-highlight">Featured Project</h3>
           {isModalOpen && (
             <button 
               onClick={(e) => {

@@ -23,7 +23,7 @@ export const PostIt = ({ className = "" }: PostItProps) => {
     <div className={`${className}`}>
       {/* First Post-it */}
       <div
-        className={`md:max-w-min group bg-grey relative md:-translate-x-20 transition-all ${
+        className={`md:max-w-min group bg-transparent relative md:-translate-x-20 transition-all ${
           activePostIt === 0 ? "z-30" : "z-11 hover:z-20"
         }`}
       >
@@ -37,7 +37,7 @@ export const PostIt = ({ className = "" }: PostItProps) => {
           onClick={() => togglePostIt(0)}
         >
           <div className="relative text-xl">
-            <p className="font-medium transition-colors duration-200">
+            <p className="font-halogrotesk transition-colors duration-200">
               Hey there! Since 2018 I&apos;ve been architecting, building and shipping software.
               As a detail-oriented, fast-paced and full-stack developer,
               I can build top-tier{" "}
@@ -67,7 +67,7 @@ export const PostIt = ({ className = "" }: PostItProps) => {
           onClick={() => togglePostIt(1)}
         >
           <div className="relative text-md">
-            <p className="font-medium transition-colors duration-200">
+            <p className="font-halogrotesk transition-colors duration-200">
               <Quote className="inline-block h-6 w-6 mb-1 -ml-1 mr-2 rotate-180 transition-colors duration-200" />
               Between the Client and the Server, side by side, An engineer
               stands, a balance with steady stride. Shifting the weight of

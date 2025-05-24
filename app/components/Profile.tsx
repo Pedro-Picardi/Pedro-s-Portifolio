@@ -128,7 +128,11 @@ const MarqueeLanguages = ({ languages }: { languages: typeof TEXT_ELEMENTS }) =>
   );
 };
 
-const Profile = () => {
+type ProfileProps = {
+  variant?: 'default' | 'cv'
+}
+
+const Profile = ({ variant = 'default' }: ProfileProps) => {
   // Media query for responsive behavior
   const isMobile = useMediaQuery('(max-width: 768px)');
   
@@ -137,7 +141,7 @@ const Profile = () => {
   
   // State
   const [sliderPosition, setSliderPosition] = useState(0);
-  const [isHovering, setIsHovering] = useState(false);
+  const [isHovering, setIsHovering] = useState(variant === 'cv');
   const [isAnimating, setIsAnimating] = useState(false);
   const [orbitAngles, setOrbitAngles] = useState({ email: 45, whatsapp: 25 });
   const [hoveredSphere, setHoveredSphere] = useState<string | null>(null);
@@ -209,9 +213,9 @@ const Profile = () => {
     return () => clearTimeout(timer);
   }, [isHovering]);
 
-  // Orbit animation - only run when no sphere is hovered
+  // Orbit animation - run when no sphere is hovered or in CV variant
   useEffect(() => {
-    if (hoveredSphere || (!isHovering && !isMobile)) return;
+    if (hoveredSphere || (!isHovering && !isMobile && variant !== 'cv')) return;
     
     const orbitInterval = setInterval(() => {
       setOrbitAngles(prev => ({
@@ -221,18 +225,18 @@ const Profile = () => {
     }, 50);
     
     return () => clearInterval(orbitInterval);
-  }, [hoveredSphere, isHovering, isMobile]);
+  }, [hoveredSphere, isHovering, isMobile, variant]);
 
   // Handler for mouse events
   const handleMouseEnter = () => {
-    if (!isMobile) {
+    if (!isMobile && variant !== 'cv') {
       setIsHovering(true);
       setIsAnimating(true);
     }
   };
   
   const handleMouseLeave = () => {
-    if (!isMobile) {
+    if (!isMobile && variant !== 'cv') {
       setSliderPosition(0);
       setIsHovering(false);
       setIsAnimating(true);
@@ -488,18 +492,18 @@ const Profile = () => {
       );
     }
     
-    // Desktop layout remains unchanged
+    // Desktop layout remains unchanged, but with special handling for CV variant
     return (
       <div className="absolute top-0 left-0 h-full w-full gap-0" style={{ zIndex: 1 }}>
         {TEXT_ELEMENTS.map((item, index) => (
           <div 
             key={index}
-            className="absolute whitespace-nowrap"
+            className="absolute font-halogrotesk whitespace-nowrap"
             style={{
               ...item.style,
               left: '130px', 
-              opacity: isHovering ? 1 : 0,
-              transform: isHovering ? 'translateX(160px)' : 'translateX(0)',
+              opacity: isHovering || variant === 'cv' ? 1 : 0,
+              transform: isHovering || variant === 'cv' ? 'translateX(160px)' : 'translateX(0)',
               transition: `all 600ms ${CUBIC_BEZIER} ${item.delay}ms`,
             }}
           >

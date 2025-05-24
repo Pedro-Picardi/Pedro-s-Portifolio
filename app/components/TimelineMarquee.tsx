@@ -175,7 +175,7 @@ const TimelineMarquee: React.FC = () => {
       onMouseEnter={() => setIsContainerHovering(true)}
       onMouseLeave={() => setIsContainerHovering(false)}
     >
-      <h3 className="text-xl p-4 font-medium text-highlight">My Career Timeline</h3>
+      <h3 className="text-xl p-4 font-halogrotesk text-highlight">My Career Timeline</h3>
       
       {/* Play/Pause Button */}
       <button 

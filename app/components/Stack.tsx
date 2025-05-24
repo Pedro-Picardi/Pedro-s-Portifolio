@@ -234,8 +234,8 @@ const Stack = () => {
   return (
     <section className="w-full flex flex-col items-center justify-center relative">
       <div className="w-full relative">
-        <h3 className="text-lg font-extralight text-[var(--color-text-highlight)] mb-4 text-center">
-          That&apos;s what I have on my toolbelt right now
+        <h3 className="text-md font-halogrotesk text-[var(--color-text-highlight)] mb-4 text-center">
+          Tailoring the best solutions with
         </h3>
         
         <div 

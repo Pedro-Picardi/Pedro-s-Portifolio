@@ -122,7 +122,7 @@ const ProgressBar: React.FC = () => {
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
     >
-      <h3 className="text-xl font-medium text-highlight">My Skills</h3>
+      <h3 className="text-xl font-halogrotesk text-highlight">My Skills</h3>
       {skills.map((skill) => (
         <ProgressBarItem key={skill.label} {...skill} inView={inView} />
       ))}
